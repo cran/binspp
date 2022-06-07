@@ -16,24 +16,24 @@ rgtp(
 )
 }
 \arguments{
-\item{kappa}{Intensity of cluster centers.}
+\item{kappa}{intensity of cluster centers.}
 
-\item{omega}{Standard deviation of normal distribution specifying the clusters spread.}
+\item{omega}{standard deviation of normal distribution specifying the clusters spread.}
 
-\item{lambda}{Parameter of generalised Poisson distribution controlling over or under dispersion.}
+\item{lambda}{parameter of generalised Poisson distribution controlling over or under dispersion.}
 
-\item{theta}{Parameter of generalised Poisson distribution controlling the mean number of points in a cluster.}
+\item{theta}{parameter of generalised Poisson distribution controlling the mean number of points in a cluster.}
 
-\item{win}{Window in which to simulate the pattern. An object of class \emph{owin} or something acceptable to \emph{as.owin}.}
+\item{win}{window in which to simulate the pattern. An object in the \cr \code{\link[spatstat.geom:owin]{spatstat.geom::owin()}} format of the \pkg{spatstat} package.}
 
-\item{nsim}{Number of simulations.}
+\item{nsim}{number of simulations.}
 
-\item{expand}{The size of expansion of window to simulate the centers of clusters.}
+\item{expand}{the size of expansion of window to simulate the centers of clusters.}
 
-\item{C}{Process of center points.}
+\item{C}{process of center points.}
 }
 \value{
-A list(X, C), where \emph{X} is Generalized Poisson process, and \emph{C} is Process of cluster centers for Generalized Poisson process.
+A list(X, C), where \emph{X} is Generalized Thomas process, and \emph{C} is Process of cluster centers for Generalized Thomas process.
 }
 \description{
 Simulation of generalized Thomas process.

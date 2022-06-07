@@ -1,4 +1,3 @@
-
 #include <RcppArmadillo.h>
 #include <RcppEigen.h>
 #include "math.h"

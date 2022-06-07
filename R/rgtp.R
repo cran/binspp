@@ -2,17 +2,18 @@
 #'
 #' @description Simulation of generalized Thomas process.
 #'
-#' @param kappa Intensity of cluster centers.
-#' @param omega Standard deviation of normal distribution specifying the clusters spread.
-#' @param lambda Parameter of generalised Poisson distribution controlling over or under dispersion.
-#' @param theta Parameter of generalised Poisson distribution controlling the mean number of points in a cluster.
-#' @param win Window in which to simulate the pattern. An object of class \emph{owin} or something acceptable to \emph{as.owin}.
-#' @param nsim Number of simulations.
-#' @param expand The size of expansion of window to simulate the centers of clusters.
-#' @param C Process of center points.
+#' @param kappa intensity of cluster centers.
+#' @param omega standard deviation of normal distribution specifying the clusters spread.
+#' @param lambda parameter of generalised Poisson distribution controlling over or under dispersion.
+#' @param theta parameter of generalised Poisson distribution controlling the mean number of points in a cluster.
+#' @param win window in which to simulate the pattern. An object in the \cr [spatstat.geom::owin()] format of the \pkg{spatstat} package.
+#' @param nsim number of simulations.
+#' @param expand the size of expansion of window to simulate the centers of clusters.
+#' @param C process of center points.
 #'
-#' @return A list(X, C), where \emph{X} is Generalized Poisson process, and \emph{C} is Process of cluster centers for Generalized Poisson process.
+#' @return A list(X, C), where \emph{X} is Generalized Thomas process, and \emph{C} is Process of cluster centers for Generalized Thomas process.
 #'
+#' @md
 #' @examples
 #'
 #' library(spatstat)
@@ -35,9 +36,9 @@ rgtp <- function( kappa, omega, lambda, theta, win = owin(c(0,1),c(0,1)), nsim =
   }
 
   if( is.null( C )){
-    winar <- (diff( win$xrange) + 2*expand)*(diff( win$yrange ) +2*expand)
+    winar <- (diff( win$xrange) + 2 * expand) * (diff( win$yrange ) + 2 * expand)
     # Cwin <- boundingbox(expand.owin(win, distance = expand ))
-    Nc <- rpois( nsim, kappa*winar )
+    Nc <- rpois( nsim, kappa * winar )
     # C <- rpoispp( kappa, win = Cwin, nsim = nsim, drop = F )
     C <- lapply( 1:nsim, function(x) cbind( runif( Nc[x], win$xrange[1]-expand, win$xrange[2] + expand),
                 runif( Nc[x], win$yrange[1]-expand, win$yrange[2] + expand) ) )

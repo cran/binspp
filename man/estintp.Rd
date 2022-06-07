@@ -61,13 +61,14 @@ The process is observed in the observation window \emph{W} which
 is a union of aligned rectangles, aligned with the coordinate axes.
 The inhomogeneities are described through a parametric model
 depending on covariates. The estimation algorithm is described in
-Anderson & Mrkvička (2020) (\doi{10.1007/s11222-020-09960-8}).
+Dvořák, Remeš, Beránek & Mrkvička (2022)
+(\doi{10.48550/arXiv.2205.07946}).
 }
 \section{Details}{
 \subsection{Parametric model}{
 
 The model for the intensity function of the parent process is the following:
-\eqn{f(u) = kappa * exp(beta_1 * z\_beta_1(u) + … + beta_k z\_beta_k(u))},
+\eqn{f(u) = kappa * exp(beta_1 * z\_beta_1(u) + … + beta_k * z\_beta_k(u))},
 where \eqn{(kappa, beta_1, …, beta_k)} is the vector of parameters
 and \eqn{z\_beta = (z\_beta_1, …, z\_beta_k)} is the list of covariates.
 Note that choosing \eqn{k = 0} is acceptable, resulting in a homogeneous
@@ -90,7 +91,7 @@ due to identifiability issues the covariate lists \emph{z_beta} and
 \emph{z_alpha} must be disjoint.
 
 The model for the scale of a cluster corresponding to the parent at
-location \eqn{u}is the following:
+location \eqn{u} is the following:
 \eqn{h(u) = exp(omega + omega_1 * z\_omega_1(u) + … + omega_m * z\_omega_m(u))},
 where \cr
 \eqn{(omega, omega_1, …, omega_m)} is the vector of parameters and \cr
@@ -132,7 +133,7 @@ observation window \emph{W_dil}, with NA values at pixels lying outside
 The control list must contain the following elements: \emph{NStep}
 (the required number of MCMC iterations to be performed), \emph{BurnIn}
 (burn-in, how many iterations at the beginning of the chain will be
-disregarder when computing the resulting estimates – note that this choice
+disregarded when computing the resulting estimates – note that this choice
 can be updated after the computation without re-running the chain,
 see the function \code{\link[=re_estimate]{re_estimate()}}), \emph{SamplingFreq} (sampling frequency
 for estimating the posterior distributions). Additionally,
@@ -206,7 +207,10 @@ W_dil = dilation.owin(W, 100)
 
 
 # User-specified hyperparameters for prior distributions:
-control = list(NStep = 100, BurnIn = 50, SamplingFreq = 5)
+control = list(NStep = 100, BurnIn = 50, SamplingFreq = 5,
+    Prior_alpha_mean = 3, Prior_alpha_SD = 2, Prior_omega_mean = 5.5,
+    Prior_omega_SD = 5, Prior_alphavec_SD = c(4.25, 0.012),
+    Prior_omegavec_SD = c(0.18,0.009))
 
 # MCMC estimation:
 Output = estintp(X, control, x_left, x_right, y_bottom, y_top,

@@ -27,16 +27,16 @@ double intalphaC(const List & z_beta, const double & alpha, const Nullable<Numer
   NumericMatrix auxWpix = as<NumericMatrix>(Wpix["v"]);
   double xstep = as<double>(Wpix["xstep"]);
   double ystep = as<double>(Wpix["ystep"]);
-  
+
   NumericMatrix aux = alpha * auxWpix;
-  
+
   if (alphabet.isNotNull()) {
     NumericVector aalphabet(alphabet);
-    
+
     List z0;
     NumericMatrix v;
     double abet;
-    
+
     for (int i = 0; i < aalphabet.length(); i++) {
       z0 = z_beta[i];
       v = as<NumericMatrix>(z0["v"]);
@@ -44,10 +44,10 @@ double intalphaC(const List & z_beta, const double & alpha, const Nullable<Numer
       aux = as<NumericMatrix>(addMat(aux, abet * v));
     } // for aalphabet.length
   } // if alphabet.isNotNull
-  
+
   NumericVector aux2 = exp(as<NumericVector>(aux)) * as<NumericVector>(auxWpix);
   double result = sum(aux2)*xstep*ystep;
-  
+
   return(result);
 }
 
@@ -58,7 +58,7 @@ double aozC(const List & z, const double & alpha, const Nullable<NumericVector> 
   double s = alpha;
   if (alphabet.isNotNull()) {
     NumericVector aalphabet(alphabet);
-    
+
     List z0;
     double xstep, ystep; // int length, vlength;
     NumericVector xrange, yrange, xcol, yrow;
@@ -104,20 +104,20 @@ double logpXCbetC(const NumericMatrix & Y, const NumericMatrix & CC, const List 
 {
   NumericVector auxAlpha(CC.nrow());
   NumericVector auxOmega(CC.nrow());
-  
+
   for (int i = 0; i < CC.nrow(); i++) {
     auxAlpha(i) = aozC(z_alpha, alpha, alphabet, CC(i,_));
     auxOmega(i) = aozC(z_omega, omega, omegabet, CC(i,_));
   } // for CC.nrow()
-  
+
   NumericVector auxLLL(Y.nrow());
   NumericVector auxDist2(Y.nrow());
-  
+
   for (int i = 0; i < Y.nrow(); i++) {
     auxDist2 = (CC(_,0) - Y(i,0)) * (CC(_,0) - Y(i,0)) + (CC(_,1) - Y(i,1)) * (CC(_,1) - Y(i,1));
     auxLLL(i) = sum(auxAlpha / (2 * M_PI * auxOmega * auxOmega) * exp( -auxDist2 / (2 * auxOmega*auxOmega)));
   } // for Y.nrow()
-  
+
   double result = AreaW - integral + sum(log(auxLLL));
   return(result);
 }
@@ -129,24 +129,24 @@ double KumulaVsechC(const NumericMatrix & CC, const List & z_alpha, const List &
 {
   NumericVector auxAlpha(CC.nrow());
   NumericVector auxOmega(CC.nrow());
-  
+
   for (int i = 0; i < CC.nrow(); i++) {
     auxAlpha(i) = aozC(z_alpha, alpha, alphabet, CC(i,_));
     auxOmega(i) = aozC(z_omega, omega, omegabet, CC(i,_));
   } // for CC.nrow()
-  
+
   double S = 0;
   NumericVector auxC(CC.nrow());
-  
+
   for (int i = 0; i < x_left.length(); i++) {
-    
+
     for (int j = 0; j < CC.nrow(); j++) {
       auxC(j) = auxAlpha(j) * ( R::pnorm(x_right(i), CC(j,0), auxOmega(j), true, false) - R::pnorm(x_left(i), CC(j,0), auxOmega(j), true, false) ) * ( R::pnorm(y_top(i), CC(j,1), auxOmega(j), true, false) - R::pnorm(y_bottom(i), CC(j,1), auxOmega(j), true, false) );
     } // for CC.nrow()
-    
+
     S = S + sum(auxC);
   } // for x_left.length()
-  
+
   return(S);
 }
 
@@ -170,7 +170,7 @@ double PrioromegaC(const double & o, const double & Prior_omega_mean, const doub
 double PrioralphabetC(const Nullable<NumericVector> & a, const Nullable<NumericVector> & Prior_alphavec_SD)
 {
   double res = 1;
-  if (a.isNotNull() & Prior_alphavec_SD.isNotNull()) {
+  if (a.isNotNull() && Prior_alphavec_SD.isNotNull()) {
     NumericVector aa(a);
     NumericVector bb(Prior_alphavec_SD);
     for (int i = 0; i < aa.length(); i++) {
@@ -184,7 +184,7 @@ double PrioralphabetC(const Nullable<NumericVector> & a, const Nullable<NumericV
 double PrioromegabetC(const Nullable<NumericVector> & o, const Nullable<NumericVector> & Prior_omegavec_SD)
 {
   double res = 1;
-  if (o.isNotNull() & Prior_omegavec_SD.isNotNull()) {
+  if (o.isNotNull() && Prior_omegavec_SD.isNotNull()) {
     NumericVector oo(o);
     NumericVector bb(Prior_omegavec_SD);
     for (int i = 0; i < oo.length(); i++) {
@@ -197,11 +197,11 @@ double PrioromegabetC(const Nullable<NumericVector> & o, const Nullable<NumericV
 
 
 // [[Rcpp::export]]
-List StepbetC(const double & kappa, const List & z_alpha, const List & z_omega, 
-              const double & alpha, const double & salpha, const Nullable<NumericVector> & alphabet, const Nullable<NumericVector> & salphabet, 
+List StepbetC(const double & kappa, const List & z_alpha, const List & z_omega,
+              const double & alpha, const double & salpha, const Nullable<NumericVector> & alphabet, const Nullable<NumericVector> & salphabet,
               const double & omega, const double & somega, const Nullable<NumericVector> & omegabet, const Nullable<NumericVector> & somegabet,
               const NumericMatrix & Y, const NumericMatrix & CC, const double & logP, const double & integral, const double & integralrho,
-              const NumericVector & x_left, const NumericVector & x_right, const NumericVector & y_bottom, const NumericVector & y_top, 
+              const NumericVector & x_left, const NumericVector & x_right, const NumericVector & y_bottom, const NumericVector & y_top,
 	      const List & Wpix, const double & AreaW, const double & FScoef,
               const double & Prior_alpha_mean, const double & Prior_alpha_SD, const double & Prior_omega_mean, const double & Prior_omega_SD,
               const Nullable<NumericVector> & Prior_alphavec_SD, const Nullable<NumericVector> & Prior_omegavec_SD)
@@ -209,51 +209,51 @@ List StepbetC(const double & kappa, const List & z_alpha, const List & z_omega,
   // update alpha
   double Newalpha = R::rnorm(alpha, salpha);
   NumericVector Newalphabet;
-  
-  if (alphabet.isNotNull() & salphabet.isNotNull()) {
+
+  if (alphabet.isNotNull() && salphabet.isNotNull()) {
     NumericVector aalphabet(alphabet);
     NumericVector ssalphabet(salphabet);
     NumericVector auxNewalphabet(aalphabet.length());
-    
+
     for (int i = 0; i < aalphabet.length(); i++) {
       auxNewalphabet(i) = R::rnorm(aalphabet(i), ssalphabet(i));
       // Rcout << auxNewalphabet(i) << "\n";
     } // for aalphabet.length
-    
+
     Newalphabet = auxNewalphabet;
-    
+
   } // if alphabet.isNotNull & salphabet.isNotNull
-  
+
   double int2, integralalpha, logP1, Newkappa, logProbAcceptA, logProbAcceptO;
-  
+
   if (alphabet.isNotNull()) { // alphabet was updated
     int2 = KumulaVsechC(CC, z_alpha, z_omega, Newalpha, Newalphabet, omega, omegabet, x_left, x_right, y_bottom, y_top);
     integralalpha = intalphaC(z_alpha, Newalpha, Newalphabet, Wpix);
     logP1 = logpXCbetC(Y, CC, z_alpha, z_omega, Newalpha, Newalphabet, omega, omegabet , AreaW, int2);
     Newkappa = exp(FScoef) / integralalpha * AreaW;
-    
+
     logProbAcceptA = logP1 - logP + integralrho*kappa - integralrho*Newkappa + CC.nrow()*(log(Newkappa) - log(kappa))
       + log(PrioralphabetC(Newalphabet, Prior_alphavec_SD)) - log(PrioralphabetC(alphabet, Prior_alphavec_SD))
       // + log(PrioromegabetC(omegabet, Prior_omegavec_SD)) - log(PrioromegabetC(omegabet, Prior_omegavec_SD))
       // + log(PrioromegaC(omega, Prior_omega_mean, Prior_omega_SD)) - log(PrioromegaC(omega, Prior_omega_mean, Prior_omega_SD))
       + log(PrioralphaC(Newalpha, Prior_alpha_mean, Prior_alpha_SD)) - log(PrioralphaC(alpha, Prior_alpha_mean, Prior_alpha_SD));
-      
+
   } else { // alphabet is NULL and was not updated
     int2 = KumulaVsechC(CC, z_alpha, z_omega, Newalpha, alphabet, omega, omegabet, x_left, x_right, y_bottom, y_top);
     integralalpha = intalphaC(z_alpha, Newalpha, alphabet, Wpix);
     logP1 = logpXCbetC(Y, CC, z_alpha, z_omega, Newalpha, alphabet, omega, omegabet , AreaW, int2);
     Newkappa = exp(FScoef) / integralalpha * AreaW;
-    
+
     logProbAcceptA = logP1 - logP + integralrho*kappa - integralrho*Newkappa + CC.nrow()*(log(Newkappa) - log(kappa))
       // + log(PrioralphabetC(Newalphabet, Prior_alphavec_SD)) - log(PrioralphabetC(alphabet, Prior_alphavec_SD))
       // + log(PrioromegabetC(omegabet, Prior_omegavec_SD)) - log(PrioromegabetC(omegabet, Prior_omegavec_SD))
       // + log(PrioromegaC(omega, Prior_omega_mean, Prior_omega_SD)) - log(PrioromegaC(omega, Prior_omega_mean, Prior_omega_SD))
       + log(PrioralphaC(Newalpha, Prior_alpha_mean, Prior_alpha_SD)) - log(PrioralphaC(alpha, Prior_alpha_mean, Prior_alpha_SD));
   }
-  
+
   double accept = R::runif(0,1);
   List output;
-  
+
   if (logP1==R_NegInf) { // all cluster centers far away from an observed point, reject proposal
     output["kappa"] = kappa;
     output["alpha"] = alpha;
@@ -290,15 +290,15 @@ List StepbetC(const double & kappa, const List & z_alpha, const List & z_omega,
       output["alphaAccept"] = 0;
     }
   }
-  
-  
+
+
   // update omega
-  
+
   double Newomega = R::rnorm(omega, somega);
   // Rcout << "Newomega: " << Newomega << "\n";
   NumericVector Newomegabet;
 
-  if (omegabet.isNotNull() & somegabet.isNotNull()) {
+  if (omegabet.isNotNull() && somegabet.isNotNull()) {
     NumericVector oomegabet(omegabet);
     NumericVector ssomegabet(somegabet);
     NumericVector auxNewomegabet(oomegabet.length());
@@ -309,7 +309,7 @@ List StepbetC(const double & kappa, const List & z_alpha, const List & z_omega,
 
     Newomegabet = auxNewomegabet;
 
-  } // if omegabet.isNotNull & somegabet.isNotNull
+  } // if omegabet.isNotNull && somegabet.isNotNull
 
 
   integralalpha = intalphaC(z_alpha, output["alpha"], output["alphabet"], Wpix);
@@ -370,21 +370,21 @@ List StepbetC(const double & kappa, const List & z_alpha, const List & z_omega,
 
 // [[Rcpp::export]]
 NumericMatrix row_add (const NumericMatrix& x, const NumericVector& extraRow) {
-  
+
   NumericMatrix x2(Dimension(x.nrow()+1, x.ncol()));
-  
+
   for (int i = 0; i < x.nrow(); i++) {x2.row(i) = x.row(i);}
   x2.row(x.nrow()) = extraRow;
-  
+
   return x2;
 }
 
 
 // [[Rcpp::export]]
 int rand_int (const int & min, const int & max) {
-  
+
   int res = floor(R::runif(min,max+1));
-  
+
   return res;
 }
 
@@ -393,8 +393,8 @@ int rand_int (const int & min, const int & max) {
 
 
 // [[Rcpp::export]]
-List StepMovePointC(const double & kappa, const List & z_alpha, const List & z_omega, 
-                    const double & alpha, const Nullable<NumericVector> & alphabet, 
+List StepMovePointC(const double & kappa, const List & z_alpha, const List & z_omega,
+                    const double & alpha, const Nullable<NumericVector> & alphabet,
                     const double & omega, const Nullable<NumericVector> & omegabet,
                     const NumericMatrix & Y, const NumericMatrix & CC, const double & logP, const double & integral, const double & integralrho,
                     const NumericVector & x_left, const NumericVector & x_right, const NumericVector & y_bottom, const NumericVector & y_top, const double & AreaW,
@@ -402,9 +402,9 @@ List StepMovePointC(const double & kappa, const List & z_alpha, const List & z_o
 {
   double choose = R::runif(0,1);
   List output;
-  
+
   // Rcout << choose << "\n";
-  
+
   if (choose < 1.0/3){ // move a parent point
     // Rcout << "move a parent point\n";
     int Discard = rand_int(0,(CC.nrow()-1));
@@ -414,7 +414,7 @@ List StepMovePointC(const double & kappa, const List & z_alpha, const List & z_o
     CC1(Discard,_) = NewCenter;
     int2 = int2 + KumulaVsechC(CC1(Range(Discard,Discard),_), z_alpha, z_omega, alpha, alphabet, omega, omegabet, x_left, x_right, y_bottom, y_top);
     double logP2 = logpXCbetC(Y, CC1, z_alpha, z_omega, alpha, alphabet, omega, omegabet , AreaW, int2);
-    
+
     double accept = R::runif(0,1);
     if (log(accept) < (logP2 - logP)){ // accept move proposal
       // Rcout << "move proposal accepted\n";
@@ -438,7 +438,7 @@ List StepMovePointC(const double & kappa, const List & z_alpha, const List & z_o
       CC1 = row_add(CC1, NewCenter);
       double int2 = integral + KumulaVsechC(CC1(Range(CC1.nrow()-1,CC1.nrow()-1),_), z_alpha, z_omega, alpha, alphabet, omega, omegabet, x_left, x_right, y_bottom, y_top);
       double logP2 = logpXCbetC(Y, CC1, z_alpha, z_omega, alpha, alphabet, omega, omegabet , AreaW, int2);
-      
+
       double accept = R::runif(0,1);
       if (log(accept) < (logP2 - logP + log(kappa*integralrho) - log(CC1.nrow()))){ // accept birth proposal
         // Rcout << "birth proposal accepted\n";
@@ -458,19 +458,19 @@ List StepMovePointC(const double & kappa, const List & z_alpha, const List & z_o
       int Discard = rand_int(0,(CC.nrow()-1));
       NumericMatrix auxCC2 = clone(CC);
       double int2 = integral - KumulaVsechC(auxCC2(Range(Discard,Discard),_), z_alpha, z_omega, alpha, alphabet, omega, omegabet, x_left, x_right, y_bottom, y_top);
-      
+
       // remove the appropriate row of the matrix
       NumericMatrix CC1(Dimension(CC.nrow() - 1, CC.ncol()));
-      int iter = 0; 
+      int iter = 0;
       for (int i = 0; i < CC.nrow(); i++) {
         if (i != Discard) {
           CC1.row(iter) = CC.row(i);
           iter++;
         }
       }
-      
+
       double logP2 = logpXCbetC(Y, CC1, z_alpha, z_omega, alpha, alphabet, omega, omegabet , AreaW, int2);
-      
+
       if (logP2==R_NegInf) { // all cluster centers far away from an observed point, reject death proposal
         // Rcout << "death proposal rejected\n";
         output["CC"] = CC;
@@ -495,9 +495,9 @@ List StepMovePointC(const double & kappa, const List & z_alpha, const List & z_o
       }
     }
   } // end move / do not move a parent point
-  
+
   return output;
-  
+
 }
 
 /*** R

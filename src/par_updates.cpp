@@ -1,4 +1,3 @@
-
 #include <RcppArmadillo.h>
 #include <RcppEigen.h>
 #include "math.h"
@@ -131,7 +130,7 @@ double update_omega( double omega, double somega, List X,
     omega = exp( ostar );
     C["mus"]= intfun_cols_cpp(Cxy, omega, xr, yr);
   }
-  return( omega );
+  return (omega);
 
 }
 
@@ -162,7 +161,7 @@ NumericVector update_lt( double lambda, double theta, double stheta,
     }
   }
 
-  return( NumericVector::create( lambda, theta ));
+  return (NumericVector::create(lambda, theta));
 }
 
 // Update kappa
@@ -173,7 +172,7 @@ double update_kappa( double kappa, double skappa, double m, double win_size, dou
   double krat = r_kappa_cpp(kstar, kappa, m, win_size, a_kappa, b_kappa);
   double U = log( R::runif(0,1));
   if( U<= krat){kappa = kstar;}
-  return( kappa );
+  return (kappa);
 
 }
 
