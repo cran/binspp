@@ -11,8 +11,7 @@ rgtp(
   theta,
   win = owin(c(0, 1), c(0, 1)),
   nsim = 1,
-  expand = 4 * omega,
-  C = NULL
+  expand = 4 * omega
 )
 }
 \arguments{
@@ -29,8 +28,6 @@ rgtp(
 \item{nsim}{number of simulations.}
 
 \item{expand}{the size of expansion of window to simulate the centers of clusters.}
-
-\item{C}{process of center points.}
 }
 \value{
 A list(X, C), where \emph{X} is Generalized Thomas process, and \emph{C} is Process of cluster centers for Generalized Thomas process.

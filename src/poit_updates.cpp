@@ -1,7 +1,7 @@
-#include <RcppArmadillo.h>
-#include <RcppEigen.h>
+// #include <RcppEigen.h>
 #include "math.h"
 #include "header.h"
+// #include <RcppArmadillo.h>
 
 // [[Rcpp::depends(RcppEigen)]]
 // [[Rcpp::depends(RcppArmadillo)]]

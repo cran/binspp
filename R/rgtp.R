@@ -9,7 +9,6 @@
 #' @param win window in which to simulate the pattern. An object in the \cr [spatstat.geom::owin()] format of the \pkg{spatstat} package.
 #' @param nsim number of simulations.
 #' @param expand the size of expansion of window to simulate the centers of clusters.
-#' @param C process of center points.
 #'
 #' @return A list(X, C), where \emph{X} is Generalized Thomas process, and \emph{C} is Process of cluster centers for Generalized Thomas process.
 #'
@@ -28,21 +27,16 @@
 #'
 #' @export
 #'
-rgtp <- function( kappa, omega, lambda, theta, win = owin(c(0,1),c(0,1)), nsim = 1, expand = 4*omega, C = NULL ){
+rgtp <- function( kappa, omega, lambda, theta, win = owin(c(0, 1), c(0, 1)), nsim = 1, expand = 4 * omega ){
 
   marks = FALSE; cdf_tmp = NULL
-  if( !is.null( C )){
-    nsim <- length( C )
-  }
 
-  if( is.null( C )){
-    winar <- (diff( win$xrange) + 2 * expand) * (diff( win$yrange ) + 2 * expand)
-    # Cwin <- boundingbox(expand.owin(win, distance = expand ))
-    Nc <- rpois( nsim, kappa * winar )
-    # C <- rpoispp( kappa, win = Cwin, nsim = nsim, drop = F )
-    C <- lapply( 1:nsim, function(x) cbind( runif( Nc[x], win$xrange[1]-expand, win$xrange[2] + expand),
+  winar <- (diff( win$xrange) + 2 * expand) * (diff( win$yrange ) + 2 * expand)
+  # Cwin <- boundingbox(expand.owin(win, distance = expand ))
+  Nc <- rpois( nsim, kappa * winar )
+  # C <- rpoispp( kappa, win = Cwin, nsim = nsim, drop = F )
+  C <- lapply( 1:nsim, function(x) cbind( runif( Nc[x], win$xrange[1]-expand, win$xrange[2] + expand),
                 runif( Nc[x], win$yrange[1]-expand, win$yrange[2] + expand) ) )
-  }
 
   C <- C[Nc>0]
   Nc <- Nc[Nc>0]

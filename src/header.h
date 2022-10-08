@@ -1,4 +1,5 @@
 #include <RcppArmadillo.h>
+#define NDEBUG // added in v0.1.23 for MacOS builds
 #include <RcppEigen.h>
 
 // [[Rcpp::depends(RcppEigen)]]

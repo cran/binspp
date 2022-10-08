@@ -1,7 +1,7 @@
 Package: binspp
 Type: Package
 Title: Bayesian Inference for Neyman-Scott Point Processes
-Version: 0.1.20
+Version: 0.1.24
 Authors@R: c(
     person("Mrkvicka", "Tomas", email = "mrkvicka.toma@gmail.com", role = "aut"),
     person("Dvorak","Jiri", email = "dvorak@karlin.mff.cuni.cz", role = "aut"),
@@ -17,6 +17,7 @@ Description: The Bayesian MCMC estimation of parameters for Thomas-type cluster
     value (cluster sizes are over or under dispersed). Details are described in
     Dvořák, Remeš, Beránek & Mrkvička (2022) <arXiv: 10.48550/arXiv.2205.07946>.
 License: GPL-3
+URL: https://github.com/tomasmrkvicka/binspp
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.5.0)
@@ -25,11 +26,11 @@ Imports: Rcpp, VGAM, cluster, mvtnorm, spatstat, spatstat.core,
 LinkingTo: Rcpp, RcppArmadillo, RcppEigen
 RoxygenNote: 7.2.0
 NeedsCompilation: yes
-Packaged: 2022-06-07 13:47:33 UTC; RR
+Packaged: 2022-10-06 13:51:57 UTC; RR
 Author: Mrkvicka Tomas [aut],
   Dvorak Jiri [aut],
   Beranek Ladislav [aut],
   Remes Radim [aut, cre]
 Maintainer: Remes Radim <inrem@jcu.cz>
 Repository: CRAN
-Date/Publication: 2022-06-07 20:30:05 UTC
+Date/Publication: 2022-10-08 06:10:02 UTC

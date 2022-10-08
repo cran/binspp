@@ -1,7 +1,9 @@
-#include <RcppArmadillo.h>
-#include <RcppEigen.h>
+// #define NDEBUG 1
+// #include <RcppEigen.h>
 #include "math.h"
 #include "header.h"
+// #include <RcppArmadillo.h>
+// #define NDEBUG 1
 
 // [[Rcpp::depends(RcppEigen)]]
 // [[Rcpp::depends(RcppArmadillo)]]

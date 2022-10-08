@@ -1,4 +1,4 @@
-67bb2e5a0ed689550fb4cb156bb107e8 *DESCRIPTION
+ea54d505b36718c6542117d0472e41ca *DESCRIPTION
 e043a724322ceb5f319be7364aed8c54 *NAMESPACE
 1746a6483e0d803bb93a7106bea26a28 *R/C_prep.R
 a1319f123a7ff2188f83ec25678a6157 *R/C_prep_naive.R
@@ -13,7 +13,7 @@ ba234a1ee5fa638b63b892a9668763e1 *R/cov_tmi.R
 9211ca5b0a6521877000f474eb49d9a5 *R/estgtp.R
 fe9b8a01e8b0af34ad8ccfa815d5b917 *R/estgtpr.R
 b74911b083cf225e45f6ffb612d62623 *R/rgenpois.R
-fcc9add1d75e87c1909033627b807b90 *R/rgtp.R
+207eee96db6f29accf03cfabd6a5a0a5 *R/rgtp.R
 8e20e8c049ae7716b7302da95e754d4c *R/trees_N4.R
 d5389109e61c25d6732be44fbadffcb2 *R/x_left_N4.R
 b3fb1eb1fbde6aa60bac68852b038bac *R/x_right_N4.R
@@ -30,6 +30,7 @@ f27ba1809fde049dc5980591774e75bc *data/x_left_N4.RData
 8072bc0c412d411967784c17cc203005 *data/x_right_N4.RData
 a6489d8db78afb3307e6524a985b9253 *data/y_bottom_N4.RData
 18979f48f4855d1db026d37912246038 *data/y_top_N4.RData
+6cd796cf1cf257511c8681f201b2896b *inst/include/binspp.h
 69b2f2231be547d221287e7e14edf160 *man/binspp.Rd
 b71ddd44282483fb4c4955587e21ba91 *man/cov_refor.Rd
 9f3bdf6d5f0f8040597f319720227c07 *man/cov_reserv.Rd
@@ -44,16 +45,16 @@ d69522acb6df67258747cca4d5dba580 *man/plot_outputs.Rd
 ce162f1657e1c3a5edba39548e8d68bc *man/print_outputs.Rd
 6e3d1bd7c50ca751c4cc04e8bd0e9ca0 *man/rThomasInhom.Rd
 4f3feb6f63c513e843c607b529f8fd9d *man/re_estimate.Rd
-46d9584985b64163167ebd0471ae05ba *man/rgtp.Rd
+3392851f922682cc29dc5c57227e4466 *man/rgtp.Rd
 8bf87fa15ab9c262f0186e0f5b495205 *man/trees_N4.Rd
 18f97fb013f014115eca050f160f83a0 *man/x_left_N4.Rd
 7930c80548c6ed32e365312eb256e597 *man/x_right_N4.Rd
 0c3e24f69e20c08ad0d1caa72b2de71f *man/y_bottom_N4.Rd
 e5714bba795ac3b2769286fe10cddce1 *man/y_top_N4.Rd
 83578afa05d0e3ff6275ef582ae032fa *src/Binspp_core.cpp
-db8ff61c811e001052c8621d2e49a19c *src/Makevars
-4c823c206ffd954f6bf2f75941c281b2 *src/RcppExports.cpp
-54bf277835c83192880d802c4ef91e18 *src/header.h
+5cad5512ea71a43c234b8447484cb4e9 *src/Makevars
+f620dfdd494fede9fbc6b6af95bb96e4 *src/RcppExports.cpp
+74a207580d923bf0c3175a3e107403a9 *src/header.h
 1e404ec7717ab1679bbd1fc75467bf5a *src/helpers.cpp
-7b0e04ef244411d3acf310c5d5c242f3 *src/par_updates.cpp
-f990e6b5e7f27b1d9d1c48c3b6625bc3 *src/poit_updates.cpp
+afa92d196e0a3f8c5c55a1bfe8ffe5ca *src/par_updates.cpp
+2dca9e4a873c35090c8ad06524e02fed *src/poit_updates.cpp
