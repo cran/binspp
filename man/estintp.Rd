@@ -74,7 +74,7 @@ and \eqn{z\_beta = (z\_beta_1, …, z\_beta_k)} is the list of covariates.
 Note that choosing \eqn{k = 0} is acceptable, resulting in a homogeneous
 distribution of parents. In such a case \emph{z_beta} must be an empty list
 or NULL. Furthermore, the list z_beta must contain named covariates in order
-to properly function with the function \code{\link[spatstat.core:ppm]{spatstat.core::ppm()}} from the
+to properly function with the function \code{\link[spatstat.model:ppm]{spatstat.model::ppm()}} from the
 \pkg{spatstat} package
 which is used in the first step to estimate the parameters
 \eqn{(kappa, beta_1, …, beta_k)}. Note that due to identifiability issues

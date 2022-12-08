@@ -20,7 +20,7 @@
 #' @useDynLib binspp, .registration=TRUE
 #' @import spatstat
 #' @import Rcpp
-#' @importFrom spatstat.core ppm
+#' @importFrom spatstat.model ppm
 #' @importFrom spatstat.geom area owin ppp im
 #' @importFrom spatstat.random rpoint rpoispp
 #' @importFrom mvtnorm rmvnorm

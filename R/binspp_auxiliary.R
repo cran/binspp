@@ -148,7 +148,7 @@ intrho = function(kappa, bet, z_beta){
 #'       the intensity function of the parent process on given covariates,
 #'       without running the MCMC chain.
 #'
-#' @details The calling the [spatstat.core::ppm()] function from the \pkg{spatstat}
+#' @details The calling the [spatstat.model::ppm()] function from the \pkg{spatstat}
 #'          package, with some additional computations useful when preparing
 #'          the run of the MCMC chain, is mainly performed in this function.
 #'          The function also contains a simple way to plot the estimated
@@ -159,7 +159,7 @@ intrho = function(kappa, bet, z_beta){
 #' @param W_dil the observation window dilated by the assumed maximal cluster radius.
 #' @param plot logical, should the estimates intensity function of the parent process be plotted?
 #'
-#' @return List containing the output of the [spatstat.core::ppm()]
+#' @return List containing the output of the [spatstat.model::ppm()]
 #'         function from the \pkg{spatstat} package, along with some auxiliary
 #'         objects useful for running the MCMC chain.
 #'
@@ -212,7 +212,7 @@ first_step <- function(X, z_beta, W_dil, plot = TRUE){
     integralrho = intrho(1, bet, z_beta)
   } else {
     # No covariates provided, estimating homogeneous model
-    FS = spatstat.core::ppm(X ~ 1)
+    FS = spatstat.model::ppm(X ~ 1)
 
     # Estimated intensity function
     B = spatstat.geom::as.im(1, W = W_dil)
@@ -342,7 +342,7 @@ pbetXC = function(Y, z_beta, z_alpha, z_omega, NStep, SamplingFreq, x_left,
     if( (step %% SamplingFreq) == 0){
       if (length(z_beta)>0){
         XX = suppressWarnings(ppp(x=CC[,1],y=CC[,2],window=W_dil))
-        SS = suppressWarnings(spatstat.core::ppm(XX ~ ., covariates = z_beta))
+        SS = suppressWarnings(spatstat.model::ppm(XX ~ ., covariates = z_beta))
         pv = rep(0,length(output.first_step$FS$coef[-1]))
         for(i in 2:length(SS$coef)){
           pv[i-1]=2*(1-pnorm(abs(SS$coef[i])/sqrt(vcov(SS)[i,i]),0,1))
@@ -383,7 +383,7 @@ pbetXC = function(Y, z_beta, z_alpha, z_omega, NStep, SamplingFreq, x_left,
 #' Note that choosing \eqn{k = 0} is acceptable, resulting in a homogeneous
 #' distribution of parents. In such a case \emph{z_beta} must be an empty list
 #' or NULL. Furthermore, the list z_beta must contain named covariates in order
-#' to properly function with the function [spatstat.core::ppm()] from the
+#' to properly function with the function [spatstat.model::ppm()] from the
 #' \pkg{spatstat} package
 #' which is used in the first step to estimate the parameters
 #' \eqn{(kappa, beta_1, …, beta_k)}. Note that due to identifiability issues
@@ -819,7 +819,7 @@ re_estimate <- function(Output, BurnIn = 0) {
 #'
 #'
 #' # Default parameters for prior distributions:
-#' control = list(NStep = 200, BurnIn = 100, SamplingFreq = 10)
+#' control = list(NStep = 100, BurnIn = 20, SamplingFreq = 5)
 #'
 #'
 #' # MCMC estimation:

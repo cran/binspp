@@ -16,7 +16,7 @@ first_step(X, z_beta, W_dil, plot = TRUE)
 \item{plot}{logical, should the estimates intensity function of the parent process be plotted?}
 }
 \value{
-List containing the output of the \code{\link[spatstat.core:ppm]{spatstat.core::ppm()}}
+List containing the output of the \code{\link[spatstat.model:ppm]{spatstat.model::ppm()}}
 function from the \pkg{spatstat} package, along with some auxiliary
 objects useful for running the MCMC chain.
 }
@@ -27,7 +27,7 @@ the intensity function of the parent process on given covariates,
 without running the MCMC chain.
 }
 \details{
-The calling the \code{\link[spatstat.core:ppm]{spatstat.core::ppm()}} function from the \pkg{spatstat}
+The calling the \code{\link[spatstat.model:ppm]{spatstat.model::ppm()}} function from the \pkg{spatstat}
 package, with some additional computations useful when preparing
 the run of the MCMC chain, is mainly performed in this function.
 The function also contains a simple way to plot the estimated
